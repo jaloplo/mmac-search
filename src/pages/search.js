@@ -3,18 +3,18 @@ import Link from 'next/link';
 import { useEffect, useState } from "react";
 import { useRouter } from 'next/router';
 
-import useArtwork from "../services/useArtwork";
+import Artwork from "../services/ArtworkService";
 
 export default function Search() {
-    const { find } = useArtwork();
     const router = useRouter();
     const [results, setResults] = useState([])
 
     useEffect(() => {
-        const keyword = router.query.keyword;
-        find(keyword)
-            .then(data => setResults(data))
-            .catch(err => setResults([]));
+        (async () => {
+            const keyword = router.query.keyword;
+            const data = await Artwork.find(keyword);
+            setResults(data);
+        })();
     }, []);
 
     return (<div>
