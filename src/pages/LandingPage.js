@@ -1,6 +1,8 @@
 import { useRef } from 'react';
 import { useRouter } from 'next/router';
 
+import HighlightedArtworkGallery from '../components/HighlightedArtworkGallery';
+
 export default function LandingPage() {
     
     const searchBoxReference = useRef();
@@ -21,6 +23,7 @@ export default function LandingPage() {
             <h1>Landing</h1>
             <input type="text" ref={searchBoxReference}></input>
             <button type="button" onClick={ onSearch }>Search</button>
+            <HighlightedArtworkGallery />
         </div>
     );
 }
