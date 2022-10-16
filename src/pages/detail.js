@@ -1,21 +1,21 @@
 import { useEffect, useState } from "react";
 import { useRouter } from 'next/router';
 
-import useArtwork from "../services/useArtwork";
+import Artwork from "../services/ArtworkService";
 
 export default function Detail() {
     const router = useRouter();
     const [detail, setDetail] = useState(null);
 
-    const { get } = useArtwork();
     useEffect(() => {
-        const artworkId = router.query.id;
+        (async () => {
+            const artworkId = router.query.id;
 
-        if(artworkId) {
-            get(artworkId)
-                .then(d => setDetail(d))
-                .catch(err => setDetail(null));
-        }
+            if(artworkId) {
+                const detail = await Artwork.get(artworkId);
+                setDetail(detail);
+            }
+        })();
     }, [router.query]);
 
     const onGoingBack = () => {
