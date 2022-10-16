@@ -1,3 +1,5 @@
+import ArtworkModel from "../model/ArtworkModel";
+
 export default function useMMAC() {
 
     const headers = new Headers({
@@ -5,6 +7,8 @@ export default function useMMAC() {
     });
 
     const search = (keyword) => {
+        const [buildArtwork] = ArtworkModel();
+
         return fetch(
             `https://collectionapi.metmuseum.org/public/collection/v1/search?q=${keyword}&hasImages=true`,
             {
@@ -22,6 +26,7 @@ export default function useMMAC() {
                     { method: 'GET', headers }
                 )
                 .then(result => result.json())
+                .then(object => buildArtwork(object))
                 .catch(err => {});
             }))
         )
